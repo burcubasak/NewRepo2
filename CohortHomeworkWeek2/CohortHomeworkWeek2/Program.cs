@@ -17,11 +17,11 @@ builder.Services.AddSwaggerGen();
 //Burada Program.cs dosyasýna servisleri Kaydettik.
 builder.Services.AddSingleton<IProductRepository, ProductRepository>();
 
-//Burada AddRepositories metotunu çaðýrdýk.
+//Extensions klasöründeki ServiceExtensions sýnýfýndaki AddRepositories metotunu burada çaðýrdýk. Extension method ile tüm repositoryleri ekleme
 builder.Services.AddRepositories();
 
 //Burada FakeAuthService sýnýfýný IAuthService arayüzüne baðladýk.
-builder.Services.AddSingleton<IAuthService, FakeAuthService>();
+builder.Services.AddSingleton<IAuthService, FakeAuthService>(); //Fake authentication servisi ekleme
 
 
 builder.Services.AddValidatorsFromAssemblyContaining<ProductValidator>();
