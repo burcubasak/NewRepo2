@@ -1,4 +1,6 @@
+using AuthorProject.DbContext;
 using AuthorProject.DbContexts;
+using AuthorProject.Middlewares;
 using AuthorProject.Services;
 using AuthorProject.Validations;
 using FluentValidation;
@@ -20,6 +22,9 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateAuthorValidation>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateAuthorValidation>();
 builder.Services.AddDbContext<MsSqlDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddScoped<IMsSqlDbContext>(provider => provider.GetService<MsSqlDbContext>());
+
+
 
 var app = builder.Build();
 
@@ -33,6 +38,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseCustomeExceptionMiddleware();
 
 app.MapControllers();
 

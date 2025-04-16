@@ -1,6 +1,9 @@
 ﻿using AuthorProject.Dtos.Author;
 using AuthorProject.Services;
+using AuthorProject.Validations;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 [ApiController]
 [Route("api/[controller]")]
@@ -23,6 +26,7 @@ public class AuthorController : ControllerBase
     [HttpGet("{id}")]
     public async Task<IActionResult> GetById(int id)
     {
+        
         var result = await _authorService.GetByIdAsync(id);
         return Ok(result);
     }
@@ -30,10 +34,13 @@ public class AuthorController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CreateAuthorDto dto)
     {
+        new CreateAuthorValidation().ValidateAndThrow(dto);
+
         var id = await _authorService.CreateAsync(dto);
         var createdAuthor = await _authorService.GetByIdAsync(id);
         return CreatedAtAction(nameof(GetById), new { id }, createdAuthor);
     }
+
 
 
     [HttpPut("{id}")]
