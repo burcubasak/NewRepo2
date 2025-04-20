@@ -24,7 +24,7 @@ namespace AuthorProject.Applications.GenreOperations.GenreCommand
             if (createGenre != null)
                 throw new InvalidOperationException("Kitap Türü Zaten Mevcut");
 
-            var genre = new Genre(); 
+            var genre = new Genre();
             genre.Name = Model.Name;
             _context.Genres.Add(genre);
             _context.SaveChanges();
@@ -36,3 +36,4 @@ namespace AuthorProject.Applications.GenreOperations.GenreCommand
         public string Name { get; set; }
     }
 }
+
